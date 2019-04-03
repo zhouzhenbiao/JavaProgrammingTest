@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- * 在链表上使用遍历器，数据规模500w
+ * 在链表上使用遍历器，数据规模10w
  */
 public class Demo20_6 {
     public static void main(String[] args) {
