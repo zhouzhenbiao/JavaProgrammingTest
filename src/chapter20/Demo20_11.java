@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Stack;
 
+/**
+ * 判断() [] {} 是都成对出现
+ */
 public class Demo20_11 {
     public static void main(String[] args) {
         try {
