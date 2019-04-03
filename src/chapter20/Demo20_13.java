@@ -18,6 +18,9 @@ import javafx.stage.Stage;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
+/**
+ * 纸牌游戏
+ */
 public class Demo20_13 extends Application {
     private ImageView[] imageViews = new ImageView[4];
     private Image[] images;
