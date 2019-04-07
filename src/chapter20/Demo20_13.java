@@ -15,17 +15,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.EmptyStackException;
-import java.util.Stack;
+import java.util.*;
 
 /**
- * 纸牌游戏
+ * 纸牌游戏,true
  */
 public class Demo20_13 extends Application {
     private ImageView[] imageViews = new ImageView[4];
     private Image[] images;
     private Label label = new Label("输入一个表达式：");
     private TextField tf_expression = new TextField();
+    private LinkedList<Integer> list1 = new LinkedList<>();
+    private LinkedList<Integer> list2 = new LinkedList<>();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -68,11 +69,17 @@ public class Demo20_13 extends Application {
         bt_shuffler.setOnAction(event -> imageViews = getImageView(imageViews, images));
         bt_verify.setOnAction(event -> {
             String s = tf_expression.getText().trim().replaceAll("\\s+", "");
-            System.out.println(s);
             if (s.length() != 0 || !s.equals("")) {
                 try {
+                    list2.clear();
                     int expressionValue = evaluateExpression(s);
-                    text.setText(expressionValue == 24 ? "正确的表达式：" + expressionValue : "错误的表达式求值：" + expressionValue);
+                    Collections.sort(list1);
+                    Collections.sort(list2);
+                    if (list1.equals(list2)) {
+                        text.setText(expressionValue == 24 ? "正确的表达式：" + expressionValue : "错误的表达式求值：" + expressionValue);
+                    } else {
+                        text.setText("输入的数字不是 扑克 显示的数字！");
+                    }
                 } catch (NullPointerException e) {
                     text.setText("请输入 expression");
                 } catch (EmptyStackException e) {
@@ -80,9 +87,11 @@ public class Demo20_13 extends Application {
                 } catch (Exception e) {
                     text.setText("未知错误");
                 }
-            } else
+            } else {
                 text.setText("expression null");
+            }
         });
+
 
     }
 
@@ -96,73 +105,81 @@ public class Demo20_13 extends Application {
     }
 
     private ImageView[] getImageView(ImageView[] imageViews, Image[] images) {
+        list1.clear();
         for (int i = 0; i < 4; i++) {
             int random = (int) (Math.random() * 52);
+            list1.add((random % 13 + 1));
             imageViews[i].setImage(images[random]);
         }
         return imageViews;
     }
 
-    //传进来的String s 是处理好的字符串，没有中间空格，前后空格
-    private int evaluateExpression(String s) {
+    /**
+     * Evaluate an expression
+     */
+    private int evaluateExpression(String expression) {
         Stack<Integer> operandStack = new Stack<>();
         Stack<Character> operatorStack = new Stack<>();
-        for (int i = 0; i < s.length(); i++) {
-            char charAt = s.charAt(i);
+        //因为不能在数字之间的空格和运算符这件的空格权衡，怎么连接数字呀
+        for (int i = 0; i < expression.length(); i++) {
+            char charAt = expression.charAt(i);
             if (charAt == '+' || charAt == '-') {
-                while (!operatorStack.empty() && (operatorStack.peek() == '+' ||
-                        operatorStack.peek() == '-' || operatorStack.peek() == '*' ||
-                        operatorStack.peek() == '/')
-                        ) {
+                while (!operatorStack.empty() &&
+                        (operatorStack.peek() == '+' ||
+                                operatorStack.peek() == '-' ||
+                                operatorStack.peek() == '*' ||
+                                operatorStack.peek() == '/')) {
                     processAnOperator(operandStack, operatorStack);
                 }
                 operatorStack.push(charAt);
             } else if (charAt == '*' || charAt == '/') {
-                while (!operatorStack.empty() && (operatorStack.peek() == '*' ||
-                        operatorStack.peek() == '/')
-                        ) {
+                while (!operatorStack.empty() &&
+                        (operatorStack.peek() == '*' || operatorStack.peek() == '/')) {
                     processAnOperator(operandStack, operatorStack);
                 }
                 operatorStack.push(charAt);
             } else if (charAt == '(') {
                 operatorStack.push(charAt);
             } else if (charAt == ')') {
-                while (operatorStack.peek() != '(')
+                //只要看到的不是 '(' 它，就一直处理里面的内容，当看到的是 '(' ，就要把它弹出来
+                while (!(operatorStack.peek() == '('))
                     processAnOperator(operandStack, operatorStack);
                 operatorStack.pop();
             } else if (charAt >= '0' && charAt <= '9') {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append(charAt);
-                while (i + 1 != s.length() && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') {
-                    stringBuilder.append(s.charAt(i + 1));
+                while (i + 1 < expression.length()
+                        && expression.charAt(i + 1) >= '0' && expression.charAt(i + 1) <= '9') {
+                    stringBuilder.append(expression.charAt(i + 1));
                     i++;
                 }
+                list2.add(Integer.valueOf(stringBuilder.toString()));
                 operandStack.push(Integer.valueOf(stringBuilder.toString()));
-            } else
-                continue;
+            }
         }
-        while (!operatorStack.empty())
+
+        while (!operatorStack.empty()) {
             processAnOperator(operandStack, operatorStack);
+        }
         return operandStack.pop();
     }
 
-    private void processAnOperator(Stack<Integer> operandStack, Stack<Character> operatorStack) {
-        char ch = operatorStack.pop();
-        int op2 = operandStack.pop();
-        int op1 = operandStack.pop();
-        switch (ch) {
-            case '+':
-                operandStack.push(op2 + op1);
-                break;
-            case '-':
-                operandStack.push(op2 - op1);
-                break;
-            case '*':
-                operandStack.push(op2 * op1);
-                break;
-            case '/':
-                operandStack.push(op2 / op1);
-                break;
-        }
+    /**
+     * Process one operator: Take an operator from operatorStack and
+     * apply it on the operands in the operandStack 1 2 + 2 2 1 * (1 + 1 1)
+     */
+    public void processAnOperator(
+            Stack<Integer> operandStack, Stack<Character> operatorStack) {
+        Integer op1 = operandStack.pop();
+        Integer op2 = operandStack.pop();
+        Character op = operatorStack.pop();
+        if (op == '+')
+            operandStack.push(op2 + op1);
+        else if (op == '-')
+            operandStack.push(op2 - op1);
+        else if (op == '*')
+            operandStack.push(op2 * op1);
+        else if (op == '/')
+            operandStack.push(op2 / op1);
     }
 }
