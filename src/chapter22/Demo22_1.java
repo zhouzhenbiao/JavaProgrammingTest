@@ -58,12 +58,10 @@ public class Demo22_1 {
         }
         int length = 0;
         String lengthMax = "";
-        Iterator<String> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            String next = iterator.next();
-            if (next.length() > length) {
-                length = next.length();
-                lengthMax = next;
+        for (String s : list) {
+            if (s.length() > length) {
+                length = s.length();
+                lengthMax = s;
             }
         }
         return lengthMax;
