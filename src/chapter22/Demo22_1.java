@@ -36,13 +36,13 @@ public class Demo22_1 {
             System.out.println("输入的不是纯字母");
         } else {
             long time = System.currentTimeMillis();
-            String maxOrderlySubstring = maxOrderlySubstring(str);
+            String maxOrderlySubstring = getMaxOrderlySubstring(str);
             System.out.println(System.currentTimeMillis() - time);
             System.out.println(maxOrderlySubstring);
         }
     }
 
-    private String maxOrderlySubstring(String str) {
+    private String getMaxOrderlySubstring(String str) {
         LinkedList<String> list = new LinkedList<>();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(str.charAt(0));
