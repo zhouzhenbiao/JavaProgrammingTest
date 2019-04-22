@@ -3,6 +3,9 @@ package chapter19;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
 
 public class Demo19 {
 
@@ -142,18 +145,6 @@ public class Demo19 {
         }
     }
 
-    @Test
-    public void max() throws Exception {
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(12321);
-        list.add(432432);
-        list.add(3443);
-        list.add(232132);
-        list.add(12);
-        list.add(2);
-        System.out.println(new Demo19().max(list));
-    }
-
     public static <E extends Comparable<E>> E max(ArrayList<E> list) {
         E max = null;
         if (list.size() != 0) {
@@ -165,7 +156,6 @@ public class Demo19 {
         } else
             return max;
     }
-
 
 
     public static void main(String[] args) {
