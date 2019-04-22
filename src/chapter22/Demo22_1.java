@@ -13,10 +13,11 @@ public class Demo22_1 {
 
     //判断是否是由字母组成的65,97
     private boolean isAlphabet(String str) {
-        for (int i = 0; i < str.length(); i++) {
-            char charAt = str.charAt(i);
-            if (!((charAt >= 65 && charAt <= 90)
-                    || (charAt >= 97 && charAt <= 122)))
+        char[] chars = str.toCharArray();
+        int length = str.length();
+        for (int i = 0; i < length; i++) {
+            if (!((chars[i] >= 65 && chars[i] <= 90)
+                    || (chars[i] >= 97 && chars[i] <= 122)))
                 return false;
         }
         return true;

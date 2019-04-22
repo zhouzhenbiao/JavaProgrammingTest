@@ -10,19 +10,19 @@ import java.util.LinkedList;
  */
 public class Demo22_2 {
     private String getMaxSubstring(String str) {
+        char[] chars = str.toCharArray();
+        int slen = str.length();
         LinkedList<String> list = new LinkedList<>();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(str.charAt(0));
-        for (int i = 1; i < str.length(); i++) {
-            for (int j = i; j < str.length(); j++) {
-                char charAt = str.charAt(j);
-                if (charAt > stringBuilder.charAt(stringBuilder.length() - 1))
-                    stringBuilder.append(charAt);
-
+        stringBuilder.append(chars[0]);
+        for (int i = 1; i < slen; i++) {
+            for (int j = i; j < slen; j++) {
+                if (chars[j] > stringBuilder.charAt(stringBuilder.length() - 1))
+                    stringBuilder.append(chars[j]);
             }
             list.addFirst(stringBuilder.toString());
             stringBuilder.setLength(0);
-            stringBuilder.append(str.charAt(i));
+            stringBuilder.append(chars[i]);
         }
 
         int maxLength = 0;
@@ -62,10 +62,11 @@ public class Demo22_2 {
 
     //判断是否是由字母组成的65,97
     private boolean isAlphabet(String str) {
-        for (int i = 0; i < str.length(); i++) {
-            char charAt = str.charAt(i);
-            if (!((charAt >= 65 && charAt <= 90)
-                    || (charAt >= 97 && charAt <= 122)))
+        char[] chars = str.toCharArray();
+        int length = str.length();
+        for (int i = 0; i < length; i++) {
+            if (!((chars[i] >= 65 && chars[i] <= 90)
+                    || (chars[i] >= 97 && chars[i] <= 122)))
                 return false;
         }
         return true;
