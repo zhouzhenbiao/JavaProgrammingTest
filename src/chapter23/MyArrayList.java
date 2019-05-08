@@ -173,4 +173,42 @@ public class MyArrayList<E> extends MyAbstractList<E> {
         }
 
     }
+
+    public static void main(String[] args) {
+        MyArrayList<String> list = new MyArrayList<>();
+        list.add("苏志超");
+        System.out.println("(1) : " + list);
+
+        list.add(0, "饶江威");
+        System.out.println("(2) : " + list);
+
+        list.add("周振标");
+        System.out.println("(3) : " + list);
+
+        list.add("蔡旭斌");
+        System.out.println("(4) : " + list);
+
+        list.add(2, "邓静静");
+        System.out.println("(5) : " + list);
+
+        list.add(5, "王楠");
+        System.out.println("(6) : " + list);
+
+        list.remove("饶江威");
+        System.out.println("(7) : " + list);
+
+        list.remove(2);
+        System.out.println("(8) : " + list);
+
+        list.remove(list.size - 1);
+        System.out.println("(9) : " + list);
+
+        Iterator<String> iterator = list.iterator();
+
+        System.out.println(iterator.next());
+//        iterator.remove();
+        list.remove(0);
+        System.out.println(iterator.next());
+        System.out.println(list);
+    }
 }
