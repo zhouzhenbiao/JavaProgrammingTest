@@ -205,8 +205,8 @@ public class MyArrayList<E> extends MyAbstractList<E> {
         Iterator<String> iterator = list.iterator();
 
         System.out.println(iterator.next());
-//        iterator.remove();
-        list.remove(0);
+        iterator.remove();
+//        list.remove(0);
         System.out.println(iterator.next());
         System.out.println(list);
     }
