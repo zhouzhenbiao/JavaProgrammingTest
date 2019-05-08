@@ -43,8 +43,7 @@ public class MyArrayList<E> extends MyAbstractList<E> {
 
     @Override
     public void add(int index, E e) {
-        if (index > data.length || size > data.length * 0.75)
-            ensureCapacity();
+        ensureCapacity();
 
         for (int i = size - 1; i >= index; i--)
             data[i + 1] = data[i];
