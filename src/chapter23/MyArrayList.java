@@ -130,7 +130,7 @@ public class MyArrayList<E> extends MyAbstractList<E> {
         private int currentIndex = 0;
 
         //当 next 之后，remove删除的应该是当前的 next 元素，所以新建一个变量，保存 currentIndex
-        private int lastReture = -1;
+        private int lastReturn = -1;
 
         private int expectedSizeCount = size;
 
@@ -149,19 +149,19 @@ public class MyArrayList<E> extends MyAbstractList<E> {
                 throw new ConcurrentModificationException();
 
             currentIndex = i + 1;
-            lastReture = i;
+            lastReturn = i;
             return data[i];
         }
 
         @Override
         public void remove() {
-            if (lastReture < 0)
+            if (lastReturn < 0)
                 throw new IllegalStateException();
 
             checkForComodification();
 
-            MyArrayList.this.remove(lastReture);
-            lastReture = -1;
+            MyArrayList.this.remove(lastReturn);
+            lastReturn = -1;
             expectedSizeCount = size;
 
         }
