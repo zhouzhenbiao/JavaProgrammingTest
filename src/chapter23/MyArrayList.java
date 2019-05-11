@@ -160,6 +160,7 @@ public class MyArrayList<E> extends MyAbstractList<E> {
 
             checkForComodification();
 
+            currentIndex = lastReturn;
             MyArrayList.this.remove(lastReturn);
             lastReturn = -1;
             expectedSizeCount = size;
