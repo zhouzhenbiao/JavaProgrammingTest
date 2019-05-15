@@ -8,6 +8,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 线程间协作
+ * Condition condition 的 使用，一个方法块 condition.await
+ 另外的几个方法块 存在 condition.signal
  */
 public class ThreadCooperation {
 
