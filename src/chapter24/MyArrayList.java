@@ -1,4 +1,4 @@
-package chapter23;
+package chapter24;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;

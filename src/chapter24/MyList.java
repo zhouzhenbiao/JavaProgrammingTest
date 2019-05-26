@@ -1,4 +1,4 @@
-package chapter23;
+package chapter24;
 
 public interface MyList<E> extends Iterable<E> {
 

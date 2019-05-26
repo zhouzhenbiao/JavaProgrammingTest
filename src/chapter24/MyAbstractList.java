@@ -1,4 +1,4 @@
-package chapter23;
+package chapter24;
 
 public abstract class MyAbstractList<E> implements MyList<E> {
 
