@@ -20,13 +20,13 @@ public class HeapSort {
 
     @Test
     public void testHeapSort() {
-        Integer[] list = {-44, -5, -3, 3, 3, 1, -4, 0, 1 , 2, 4, 5, 53};
+        Integer[] list = {-44, -5, -3, 3, 3, 1, -4, 0, 1, 2, 4, 5, 53};
         heapSort(list);
         System.out.println(Arrays.toString(list));
     }
 
-    public class Heap<E extends Comparable<E>> {
-        private ArrayList<E> list = new ArrayList();
+    public static class Heap<E extends Comparable<E>> {
+        private ArrayList<E> list = new ArrayList<>();
 
         /**
          * 构造一个空的堆
@@ -90,15 +90,16 @@ public class HeapSort {
                 int rightChildIndex = 2 * currentIndex + 2;
 
                 //当currentIndex * 2 + 1 > list.size() 意味着 currentIndex 是到最后一层了
-                if (leftChildIndex > list.size()) break;
+                if (leftChildIndex >= list.size()) break;
 
                 //先找到左右孩子中较大的那个结点的index
                 int maxIndex = leftChildIndex;
-                if (list.get(maxIndex).compareTo(list.get(rightChildIndex)) < 0)
-                    maxIndex = rightChildIndex;
+                if (rightChildIndex < list.size())
+                    if (list.get(maxIndex).compareTo(list.get(rightChildIndex)) < 0)
+                        maxIndex = rightChildIndex;
 
                 //在把当前结点和较大结点进行交换
-                if (list.get(currentIndex).compareTo(list.get(maxIndex)) <= 0) {
+                if (list.get(currentIndex).compareTo(list.get(maxIndex)) < 0) {
                     E temp = list.get(maxIndex);
                     list.set(maxIndex, list.get(currentIndex));
                     list.set(currentIndex, temp);
