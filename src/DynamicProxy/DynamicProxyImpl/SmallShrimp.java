@@ -1,7 +1,8 @@
 package DynamicProxy.DynamicProxyImpl;
 
-import com.zzb.DynamicProxy.Service;
-import com.zzb.DynamicProxy.Service2;
+
+import DynamicProxy.Service;
+import DynamicProxy.Service2;
 
 /**
  * 虾米类 实现了 他的 核心业务
